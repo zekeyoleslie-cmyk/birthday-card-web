@@ -1,0 +1,177 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<title>Birthday Surprise 🎉</title>  
+  
+<style>  
+body {  
+    margin: 0;  
+    height: 100vh;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-family: Arial, sans-serif;  
+    overflow: hidden;  
+  
+    /* Soft girls aesthetic gradient */  
+    background: linear-gradient(-45deg,  
+        #ffb6c1,  
+        #ffc1cc,  
+        #e0bbff,  
+        #ffd6a5,  
+        #fff0f5  
+    );  
+  
+    background-size: 400% 400%;  
+    animation: softFlow 12s ease infinite;  
+}  
+  
+/* Smooth constant color change */  
+@keyframes softFlow {  
+    0% { background-position: 0% 50%; }  
+    25% { background-position: 50% 0%; }  
+    50% { background-position: 100% 50%; }  
+    75% { background-position: 50% 100%; }  
+    100% { background-position: 0% 50%; }  
+}  
+  
+/* Card */  
+.card {  
+    width: 340px;  
+    padding: 25px;  
+    background: rgba(255, 255, 255, 0.85);  
+    backdrop-filter: blur(10px);  
+    border-radius: 20px;  
+    text-align: center;  
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);  
+    transform: scale(0.95);  
+    transition: 0.5s;  
+}  
+  
+.card:hover {  
+    transform: scale(1);  
+}  
+  
+/* TITLE STYLE */  
+.title {  
+    color: #d63384;  
+    font-size: 28px;  
+    line-height: 1.4;  
+    text-align: center;  
+    margin-bottom: 10px;  
+}  
+  
+/* NAME STYLE */  
+.name {  
+    color: #c084fc;  
+    font-weight: bold;  
+    font-size: 32px;  
+    margin-left: 6px;  
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);  
+}  
+  
+/* Paragraph */  
+p {  
+    color: #4a2f3a;  
+    font-size: 15px;  
+    line-height: 1.6;  
+}  
+  
+/* Button */  
+button {  
+    margin-top: 15px;  
+    padding: 12px 22px;  
+    border: none;  
+    border-radius: 30px;  
+    background: linear-gradient(45deg, #ff6fa3, #c084fc);  
+    color: white;  
+    font-size: 16px;  
+    cursor: pointer;  
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);  
+    transition: 0.3s;  
+}  
+  
+button:hover {  
+    transform: scale(1.05);  
+}  
+  
+/* Confetti */  
+.confetti {  
+    position: absolute;  
+    width: 10px;  
+    height: 10px;  
+    top: -10px;  
+    animation: fall linear forwards;  
+}  
+  
+@keyframes fall {  
+    to {  
+        transform: translateY(100vh) rotate(360deg);  
+        opacity: 0;  
+    }  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<div class="card">  
+  
+    <h1 class="title">  
+        🎉 Happy Birthday <span class="name">Blandine</span>  
+    </h1>  
+  
+    <p>  
+        Wishing you a truly joyful birthday filled with love, laughter, and beautiful memories.    
+        May this new chapter of your life be filled with peace, success, and endless happiness.    
+        You deserve all the beauty life has to offer be it on that special day and always. 💖  
+    </p>  
+  
+    <button onclick="startCelebration()">Open Your Surprise 💖</button>  
+</div>  
+  
+<audio id="song">  
+    <source src="your-song.mp3" type="audio/mp3">  
+</audio>  
+  
+<script>  
+function startCelebration() {  
+    const song = document.getElementById("song");  
+  
+    song.play();  
+  
+    // Stop after 1 minute  
+    setTimeout(() => {  
+        song.pause();  
+        song.currentTime = 0;  
+    }, 60000);  
+  
+    // Confetti effect  
+    for (let i = 0; i < 100; i++) {  
+        let confetti = document.createElement("div");  
+        confetti.classList.add("confetti");  
+        document.body.appendChild(confetti);  
+  
+        confetti.style.left = Math.random() * window.innerWidth + "px";  
+        confetti.style.background = randomColor();  
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";  
+  
+        setTimeout(() => {  
+            confetti.remove();  
+        }, 5000);  
+    }  
+}  
+  
+function randomColor() {  
+    const colors = [  
+        "#ffb6c1", "#ff69b4", "#ffc1cc",  
+        "#e0bbff", "#c084fc", "#ffd6a5",  
+        "#ffffff", "#ff85a2"  
+    ];  
+    return colors[Math.floor(Math.random() * colors.length)];  
+}  
+</script>  
+  
+</body>  
+</html>  
