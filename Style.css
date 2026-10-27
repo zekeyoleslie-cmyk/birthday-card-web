@@ -1,24 +1,60 @@
-/* Birthday Card - complementary stylesheet
-   Load AFTER the inline <style> block so these rules enhance it. */
+/* ==========================================================
+   Birthday Surprise - style.css
+   ========================================================== */
 
 :root {
     --pink: #ff6fa3;
-    --pink-soft: #ffb6c1;
+    --pink-deep: #d63384;
     --purple: #c084fc;
     --ink: #4a2f3a;
     --glass: rgba(255, 255, 255, 0.85);
 }
 
-/* ---------- Card entrance ---------- */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+
+    /* Soft aesthetic gradient, slowly flowing */
+    background: linear-gradient(-45deg,
+        #ffb6c1, #ffc1cc, #e0bbff, #ffd6a5, #fff0f5);
+    background-size: 400% 400%;
+    animation: softFlow 12s ease infinite;
+}
+
+@keyframes softFlow {
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 50% 0%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 100%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ---------- Card ---------- */
 .card {
     position: relative;
     z-index: 2;
+    width: 340px;
     max-width: calc(100vw - 32px);
-    box-sizing: border-box;
+    padding: 25px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     animation: cardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
                cardFloat 6s ease-in-out 1s infinite;
 }
 
+/* Glowing border */
 .card::before {
     content: "";
     position: absolute;
@@ -34,7 +70,7 @@
 
 @keyframes cardIn {
     from { opacity: 0; transform: translateY(30px) scale(0.9); }
-    to   { opacity: 1; transform: translateY(0) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes cardFloat {
@@ -47,11 +83,22 @@
     100% { background-position: 300% 50%; }
 }
 
-/* ---------- Typography polish ---------- */
-.title { text-wrap: balance; }
+/* ---------- Typography ---------- */
+.title {
+    margin: 0 0 10px;
+    color: var(--pink-deep);
+    font-size: 28px;
+    line-height: 1.4;
+    text-wrap: balance;
+}
 
 .name {
     display: inline-block;
+    margin-left: 6px;
+    color: var(--purple);
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
     animation: nameWiggle 3s ease-in-out infinite;
 }
 
@@ -60,27 +107,88 @@
     50%      { transform: rotate(2deg) scale(1.05); }
 }
 
-/* ---------- Button ---------- */
-button:focus-visible,
-.audio-toggle:focus-visible {
-    outline: 3px solid var(--purple);
-    outline-offset: 3px;
+p {
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
 }
 
+/* ---------- Buttons ---------- */
+button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(45deg, var(--pink), var(--purple));
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+#surpriseBtn {
+    margin-top: 15px;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 16px;
+}
+
+button:hover  { transform: scale(1.05); }
 button:active { transform: scale(0.97); }
 
 button:disabled {
     opacity: 0.7;
     cursor: default;
+    transform: none;
 }
 
-/* ---------- Floating hearts background ---------- */
+button:focus-visible {
+    outline: 3px solid var(--purple);
+    outline-offset: 3px;
+}
+
+/* ---------- Surprise message ---------- */
+.surprise {
+    min-height: 1.6em;
+    margin-top: 16px;
+    color: var(--pink-deep);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.surprise:not(:empty)::after {
+    content: "|";
+    margin-left: 2px;
+    animation: blink 0.8s steps(1) infinite;
+}
+
+.surprise.done::after { content: ""; }
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- Sound toggle ---------- */
+.sound-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.sound-toggle.visible { display: flex; }
+
+/* ---------- Floating hearts ---------- */
 .hearts-layer {
     position: fixed;
     inset: 0;
     z-index: 1;
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .heart {
@@ -92,16 +200,20 @@ button:disabled {
 }
 
 @keyframes heartRise {
-    0%   { opacity: 0;    transform: translateY(0) translateX(0) scale(0.6); }
+    0%   { opacity: 0; transform: translate(0, 0) scale(0.6); }
     15%  { opacity: 0.9; }
-    100% { opacity: 0;    transform: translateY(-110vh) translateX(var(--drift, 30px)) scale(1.1); }
+    100% { opacity: 0; transform: translate(var(--drift, 30px), -110vh) scale(1.1); }
 }
 
-/* ---------- Confetti variants (override inline rules) ---------- */
+/* ---------- Confetti ---------- */
 .confetti {
     position: fixed;
+    top: -20px;
     z-index: 5;
+    width: 10px;
+    height: 10px;
     pointer-events: none;
+    animation: fall linear forwards;
 }
 
 .confetti--circle { border-radius: 50%; }
@@ -114,12 +226,19 @@ button:disabled {
     line-height: 1;
 }
 
+@keyframes fall {
+    to {
+        transform: translateY(105vh) rotate(540deg);
+        opacity: 0;
+    }
+}
+
 /* ---------- Cursor sparkles ---------- */
 .sparkle {
     position: fixed;
     z-index: 4;
-    pointer-events: none;
     font-size: 14px;
+    pointer-events: none;
     animation: sparkleFade 0.9s ease-out forwards;
 }
 
@@ -128,52 +247,14 @@ button:disabled {
     to   { opacity: 0; transform: translateY(-24px) scale(0.4); }
 }
 
-/* ---------- Surprise message ---------- */
-.surprise {
-    margin-top: 16px;
-    min-height: 1.6em;
-    color: #d63384;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.surprise::after {
-    content: "|";
-    margin-left: 2px;
-    animation: blink 0.8s steps(1) infinite;
-}
-
-.surprise.done::after { content: ""; }
-
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ---------- Audio toggle ---------- */
-.audio-toggle {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 10;
-    width: 44px;
-    height: 44px;
-    margin: 0;
-    padding: 0;
-    border-radius: 50%;
-    font-size: 20px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.audio-toggle.visible { display: flex; }
-
 /* ---------- Small screens ---------- */
 @media (max-width: 380px) {
-    .card { padding: 20px 16px; }
+    .card  { padding: 20px 16px; }
     .title { font-size: 24px; }
     .name  { font-size: 28px; }
 }
 
-/* ---------- Accessibility: reduced motion ---------- */
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
