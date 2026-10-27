@@ -1,30 +1,42 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<title>Birthday Surprise 🎉</
-</head>  
-  <link rel="stylesheet" href="Style.css">
-<body>  
-  
-<div class="card">  
-  
-    <h1 class="title">  
-        🎉 Happy Birthday <span class="name">Blandine</span>  
-    </h1>  
-  
-    <p>  
-        Wishing you a truly joyful birthday filled with love, laughter, and beautiful memories.    
-        May this new chapter of your life be filled with peace, success, and endless happiness.    
-        You deserve all the beauty life has to offer be it on that special day and always. 💖  
-    </p>  
-  
-    <button onclick="startCelebration()">Open Your Surprise 💖</button>  
-</div>  
-  
-<audio id="song">  
-    <source src="your-song.mp3" type="audio/mp3">  
-</audio>  
-  <script src="Script.js"></script>
-</body>  
-</html>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A birthday surprise for Blandine">
+    <title>Birthday Surprise 🎉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="card">
+        <h1 class="title">
+            🎉 Happy Birthday <span class="name">Blandine</span>
+        </h1>
+
+        <p>
+            Wishing you a truly joyful birthday filled with love, laughter, and beautiful memories.
+            May this new chapter of your life be filled with peace, success, and endless happiness.
+            You deserve all the beauty life has to offer, on that special day and always. 💖
+        </p>
+
+        <button id="surpriseBtn" type="button">Open Your Surprise 💖</button>
+
+        <div id="surprise" class="surprise" role="status" aria-live="polite"></div>
+    </main>
+
+    <!-- Sound on/off (appears after the surprise is opened) -->
+    <button id="soundBtn" class="sound-toggle" type="button" aria-label="Mute music">🔊</button>
+
+    <!--
+        Optional: add your own song as "your-song.mp3" in the same folder.
+        If the file is missing, the site plays a built-in Happy Birthday
+        melody instead, so there is always music.
+    -->
+    <audio id="song" preload="auto" loop>
+        <source src="your-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
